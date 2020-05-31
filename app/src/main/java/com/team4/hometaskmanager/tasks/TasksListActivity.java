@@ -1,10 +1,12 @@
-package com.team4.hometaskmanager;
+package com.team4.hometaskmanager.tasks;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+
+import com.team4.hometaskmanager.R;
 
 public class TasksListActivity extends AppCompatActivity {
 
@@ -24,7 +26,7 @@ public class TasksListActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        taskAdapter = new TaskAdapter(new String[]{"Task 1", "Task 2", "Task 3"});
+        taskAdapter = new TaskAdapter(new String[] {"Task 1", "Task 2", "Task 3"});
         recyclerView.setAdapter(taskAdapter);
     }
 }
