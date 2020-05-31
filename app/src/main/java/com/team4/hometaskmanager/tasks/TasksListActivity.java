@@ -26,7 +26,7 @@ public class TasksListActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        taskAdapter = new TaskAdapter(new String[] {"Task 1", "Task 2", "Task 3"});
+        taskAdapter = new TaskAdapter(Task.TASKS);
         recyclerView.setAdapter(taskAdapter);
     }
 }

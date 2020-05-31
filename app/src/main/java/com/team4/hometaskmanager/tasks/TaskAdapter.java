@@ -12,7 +12,7 @@ import com.team4.hometaskmanager.R;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
 
-    private String[] tasksDataSet;
+    private Task[] tasksDataSet;
 
     public static class TaskViewHolder extends RecyclerView.ViewHolder {
         public TextView titleTextView;
@@ -23,7 +23,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         }
     }
 
-    public TaskAdapter(String[] tasksDataSet) {
+    public TaskAdapter(Task[] tasksDataSet) {
         this.tasksDataSet = tasksDataSet;
     }
 
@@ -37,7 +37,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
-        holder.titleTextView.setText(tasksDataSet[position]);
+        holder.titleTextView.setText(tasksDataSet[position].name);
     }
 
     @Override
