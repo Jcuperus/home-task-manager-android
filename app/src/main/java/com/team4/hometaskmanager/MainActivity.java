@@ -2,18 +2,19 @@ package com.team4.hometaskmanager;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.team4.hometaskmanager.tasks.TasksListActivity;
+import com.team4.hometaskmanager.tasks.TasksListFragment;
 
 public class MainActivity extends AppCompatActivity {
 
+    private FragmentManager fragmentManager = getSupportFragmentManager();
     private Context context;
 
     @Override
@@ -26,17 +27,16 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
                 switch (item.getItemId()) {
                     case R.id.tasks_page_menu_item:
-                        startActivity(new Intent(context, TasksListActivity.class));
+                        fragmentTransaction.replace(R.id.page_content_frame, new TasksListFragment());
+                        fragmentTransaction.commit();
                         return true;
                 }
                 return false;
             }
         });
-    }
-
-    public void openTasksActivity(View view) {
-        startActivity(new Intent(context, TasksListActivity.class));
     }
 }
