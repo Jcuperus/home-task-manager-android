@@ -7,6 +7,10 @@ public class Task {
     public String description;
     public boolean isDone;
 
+    public Task() {
+
+    }
+
     public Task(Integer id, Integer groupId, String name, String description, boolean isDone) {
         this.id = id;
         this.groupId = groupId;
@@ -20,4 +24,16 @@ public class Task {
         new Task(2, 1, "Do the dishes", "Please don't make me do it again", false),
         new Task(3, 2, "Do some paperwork", "Boy do I love me some paperwork", false)
     };
+
+    public static Task getTask(Integer taskId) {
+        Task task = null;
+
+        for (Task currentTask: TASKS) {
+            if (currentTask.id == taskId) {
+                task = currentTask;
+            }
+        }
+
+        return task;
+    }
 }

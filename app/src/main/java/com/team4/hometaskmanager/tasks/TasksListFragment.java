@@ -58,7 +58,7 @@ public class TasksListFragment extends Fragment {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), TaskFormActivity.class));
+            startActivity(new Intent(getContext(), TaskFormActivity.class));
             }
         });
 
