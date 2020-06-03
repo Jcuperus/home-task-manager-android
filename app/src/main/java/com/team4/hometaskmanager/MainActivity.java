@@ -24,16 +24,13 @@ public class MainActivity extends AppCompatActivity {
 
         // Register bottom navigation selected event
         BottomNavigationView bottomNavigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
-        bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.tasks_page_menu_item:
-                        openFragment(new TasksListFragment());
-                        return true;
-                }
-                return false;
+        bottomNavigation.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.tasks_page_menu_item:
+                    openFragment(new TasksListFragment());
+                    return true;
             }
+            return false;
         });
 
         // Set default opened fragment

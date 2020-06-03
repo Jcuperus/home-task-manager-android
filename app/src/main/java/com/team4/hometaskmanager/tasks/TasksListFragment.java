@@ -55,12 +55,7 @@ public class TasksListFragment extends Fragment {
 
         // Register floating button click handler
         FloatingActionButton floatingActionButton = view.findViewById(R.id.create_task_button);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            startActivity(new Intent(getContext(), TaskFormActivity.class));
-            }
-        });
+        floatingActionButton.setOnClickListener(v -> startActivity(new Intent(getContext(), TaskFormActivity.class)));
 
         return view;
     }

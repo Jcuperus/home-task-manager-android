@@ -37,11 +37,6 @@ public class TaskFormActivity extends AppCompatActivity {
 
         AutoCompleteTextView groupDropdown = findViewById(R.id.group_exposed_dropdown);
         groupDropdown.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.dropdown_menu_popup_item, groups));
-        groupDropdown.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                taskViewModel.setGroupId(groups[position].id);
-            }
-        });
+        groupDropdown.setOnItemClickListener((parent, view, position, id) -> taskViewModel.setGroupId(groups[position].id));
     }
 }
