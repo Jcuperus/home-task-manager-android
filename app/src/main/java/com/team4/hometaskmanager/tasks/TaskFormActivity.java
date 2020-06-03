@@ -1,22 +1,15 @@
 package com.team4.hometaskmanager.tasks;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.databinding.adapters.SpinnerBindingAdapter;
-
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Spinner;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import com.team4.hometaskmanager.Group;
 import com.team4.hometaskmanager.R;
 import com.team4.hometaskmanager.databinding.ActivityTaskFormBinding;
-
-import java.util.logging.Logger;
 
 public class TaskFormActivity extends AppCompatActivity {
 

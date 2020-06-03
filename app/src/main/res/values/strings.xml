@@ -4,4 +4,5 @@
     <string name="name">Name</string>
     <string name="description">Description</string>
     <string name="group">Group</string>
+    <string name="task_status_description">Task status symbol</string>
 </resources>
