@@ -28,7 +28,7 @@ public class TaskFormActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_form);
 
-        Integer taskId = getIntent().getIntExtra("id", -1);
+        int taskId = getIntent().getIntExtra("id", -1);
         Task task = taskId >= 0 ? Task.getTask(taskId) : new Task();
 
         ActivityTaskFormBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_task_form);

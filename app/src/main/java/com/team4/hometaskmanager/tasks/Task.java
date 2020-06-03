@@ -29,9 +29,7 @@ public class Task {
         Task task = null;
 
         for (Task currentTask: TASKS) {
-            if (currentTask.id == taskId) {
-                task = currentTask;
-            }
+            if (currentTask.id.equals(taskId)) task = currentTask;
         }
 
         return task;
