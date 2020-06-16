@@ -2,14 +2,13 @@ package com.team4.hometaskmanager.tasks;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.team4.hometaskmanager.R;
@@ -51,17 +50,12 @@ public class TasksListFragment extends Fragment {
         layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        taskAdapter = new TaskAdapter(Task.TASKS);
+        taskAdapter = new TaskAdapter(Task.TASKS, position -> startActivity(getTaskFormIntent(Task.TASKS[position].id)));
         recyclerView.setAdapter(taskAdapter);
 
         // Register floating button click handler
         FloatingActionButton floatingActionButton = view.findViewById(R.id.create_task_button);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), TaskFormActivity.class));
-            }
-        });
+        floatingActionButton.setOnClickListener(v -> startActivity(getTaskFormIntent()));
 
         FloatingActionButton floatingActionButton1 = view.findViewById(R.id.floatingActionButton);
         floatingActionButton1.setOnClickListener(new View.OnClickListener(){
@@ -72,5 +66,13 @@ public class TasksListFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private Intent getTaskFormIntent() {
+        return new Intent(getContext(), TaskFormActivity.class);
+    }
+
+    private Intent getTaskFormIntent(int taskId) {
+        return getTaskFormIntent().putExtra("id", taskId);
     }
 }
