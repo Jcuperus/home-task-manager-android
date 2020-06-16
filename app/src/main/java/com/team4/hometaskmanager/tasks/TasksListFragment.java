@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.team4.hometaskmanager.R;
+import com.team4.hometaskmanager.groups.GroupFormActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,6 +60,14 @@ public class TasksListFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), TaskFormActivity.class));
+            }
+        });
+
+        FloatingActionButton floatingActionButton1 = view.findViewById(R.id.floatingActionButton);
+        floatingActionButton1.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                startActivity(new Intent(getContext(), GroupFormActivity.class));
             }
         });
 

@@ -9,8 +9,10 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Button;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.team4.hometaskmanager.groups.GroupsListFragment;
 import com.team4.hometaskmanager.tasks.TasksListFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.tasks_page_menu_item:
                         openFragment(new TasksListFragment());
+                        return true;
+                    case R.id.groups_page_menu_item:
+                        openFragment(new GroupsListFragment());
                         return true;
                 }
                 return false;

@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HomeTaskManager">
-        <activity android:name=".tasks.TaskFormActivity"></activity>
+        <activity android:name=".groups.GroupEditActivity"></activity>
+        <activity android:name=".groups.GroupFormActivity" />
+        <activity android:name=".tasks.TaskFormActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
