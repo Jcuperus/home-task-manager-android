@@ -1,5 +1,6 @@
 package com.team4.hometaskmanager.groups;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.team4.hometaskmanager.R;
 
 /**
@@ -45,6 +47,14 @@ public class GroupsListFragment extends Fragment {
         recyclerView.setLayoutManager(manager);
         adapter = new GroupAdapter(Group.GROUPS);
         recyclerView.setAdapter(adapter);
+
+        FloatingActionButton floatingActionButton1 = view.findViewById(R.id.floatingActionButton);
+        floatingActionButton1.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                startActivity(new Intent(getContext(), GroupFormActivity.class));
+            }
+        });
         return view;
     }
 }

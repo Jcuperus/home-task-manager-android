@@ -30,10 +30,6 @@ public class TaskFormActivity extends AppCompatActivity {
         int taskId = getIntent().getIntExtra("id", -1);
         Task task = taskId >= 0 ? Task.getTask(taskId) : new Task();
 
-        ActivityTaskFormBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_task_form);
-        taskViewModel = new TaskViewModel(task);
-        binding.setTaskViewModel(taskViewModel);
-
         AutoCompleteTextView groupDropdown = findViewById(R.id.group_exposed_dropdown);
         groupDropdown.setAdapter(new ArrayAdapter<Group>(getApplicationContext(), R.layout.dropdown_menu_popup_item, groups));
         AutoCompleteTextView hourDropDown = findViewById(R.id.hour_drop_down);
@@ -41,5 +37,9 @@ public class TaskFormActivity extends AppCompatActivity {
         AutoCompleteTextView minuteDropDown = findViewById(R.id.minute_drop_down);
         minuteDropDown.setAdapter(new ArrayAdapter<Integer>(getApplicationContext(), R.layout.dropdown_menu_popup_item, filledArray(60)));
         groupDropdown.setOnItemClickListener((parent, view, position, id) -> taskViewModel.setGroupId(groups[position].id));
+
+        ActivityTaskFormBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_task_form);
+        taskViewModel = new TaskViewModel(task);
+        binding.setTaskViewModel(taskViewModel);
     }
 }

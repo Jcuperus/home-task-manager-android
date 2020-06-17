@@ -57,14 +57,6 @@ public class TasksListFragment extends Fragment {
         FloatingActionButton floatingActionButton = view.findViewById(R.id.create_task_button);
         floatingActionButton.setOnClickListener(v -> startActivity(getTaskFormIntent()));
 
-        FloatingActionButton floatingActionButton1 = view.findViewById(R.id.floatingActionButton);
-        floatingActionButton1.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                startActivity(new Intent(getContext(), GroupFormActivity.class));
-            }
-        });
-
         return view;
     }
 

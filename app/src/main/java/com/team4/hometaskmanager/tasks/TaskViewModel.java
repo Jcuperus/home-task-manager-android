@@ -36,4 +36,22 @@ public class TaskViewModel extends BaseObservable {
     public void setDescription(String description) {
         task.description = description;
     }
+
+    @Bindable
+    public String getHour(){
+        return task.hour;
+    }
+
+    public void setHour(String hour){
+        task.hour = hour;
+    }
+
+    @Bindable
+    public String getMinute(){
+        return task.minute;
+    }
+
+    public void setMinute(String minute){
+        task.minute = minute;
+    }
 }
