@@ -3,13 +3,11 @@ package com.team4.hometaskmanager.groups;
 public class Group {
     public int id;
     public String name;
-    public User[] managers;
     public User[] members;
 
-    public Group(int id, String name, User[] managers, User[] members){
+    public Group(int id, String name, User[] members){
         this.id = id;
         this.name = name;
-        this.managers = managers;
         this.members = members;
     }
 
@@ -23,7 +21,7 @@ public class Group {
     public static final User DEWEY = new User(4, "Dewey Duck", "13524");
     public static final User LOUIE = new User(5, "Louie Duck", "42531");
     public static final Group[] GROUPS = {
-            new Group(0, "Groepje 1", new User[]{SCROOGE}, new User[]{SCROOGE, DONALD, DAISY}),
-            new Group(1, "De neefjes", new User[]{DONALD, HUEY}, new User[]{DONALD, HUEY, DEWEY, LOUIE})
+            new Group(0, "Groepje 1", new User[]{SCROOGE, DONALD, DAISY}),
+            new Group(1, "De neefjes", new User[]{DONALD, HUEY, DEWEY, LOUIE})
     };
 }

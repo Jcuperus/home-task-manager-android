@@ -39,6 +39,7 @@ public class TasksListFragment extends Fragment {
     private RecyclerView.Adapter taskAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private TasksListViewModel viewModel;
+    private TasksRepository tasksRepository = new TasksRepository();
 
     public TasksListFragment() {
         // Required empty public constructor
@@ -94,13 +95,7 @@ public class TasksListFragment extends Fragment {
 
     private void updateTasks() {
         // Fetch tasks data
-        Map<String, String> headers = new HashMap<>();
-        headers.put("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqYWVwIiwiZXhwIjoxNTkzNzgxMzExfQ.ozROGJU2yw3S0jweDW_KjSAQd-E2tTmCrpZ_c0dFonKNJmMiHoSuPXzQMFLbYB3hJSJlS6bWfIDCI_UUz5NkBA");
-        Request<Task[]> request = new GsonRequest<>(API_URL, Task[].class, headers,
-                this::updateTasksViewData,
-                error -> Log.d("tasks", error.toString())
-        );
-
+        Request<Task[]> request = tasksRepository.getTasks(this::updateTasksViewData, error -> Log.d("tasks", error.toString()));
         RequestQueueSingleton.getInstance(getContext()).addToRequestQueue(request);
     }
 

@@ -6,10 +6,10 @@ import com.team4.hometaskmanager.common.GsonRequest;
 
 public class TasksRepository {
     public Request<Task> getTask(Integer taskId, Response.Listener<Task> listener, Response.ErrorListener errorListener) {
-        return new GsonRequest<>("/tasks/" + taskId, Task.class, null, listener, errorListener);
+        return new GsonRequest<>(Request.Method.GET, "tasks/" + taskId, Task.class, listener, errorListener);
     }
 
     public Request<Task[]> getTasks(Response.Listener<Task[]> listener, Response.ErrorListener errorListener) {
-        return new GsonRequest<>("/tasks", Task[].class, null, listener, errorListener);
+        return new GsonRequest<>(Request.Method.GET, "tasks", Task[].class, listener, errorListener);
     }
 }

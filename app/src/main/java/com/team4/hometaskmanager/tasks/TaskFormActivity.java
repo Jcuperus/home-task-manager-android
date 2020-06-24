@@ -28,6 +28,7 @@ public class TaskFormActivity extends AppCompatActivity {
         setContentView(R.layout.activity_task_form);
 
         int taskId = getIntent().getIntExtra("id", -1);
+
         Task task = taskId >= 0 ? Task.getTask(taskId) : new Task();
 
         AutoCompleteTextView groupDropdown = findViewById(R.id.group_exposed_dropdown);
@@ -42,4 +43,6 @@ public class TaskFormActivity extends AppCompatActivity {
         taskViewModel = new TaskViewModel(task);
         binding.setTaskViewModel(taskViewModel);
     }
+
+
 }

@@ -20,11 +20,11 @@ public class GroupEditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_group_edit);
         this.recyclerView = findViewById(R.id.members_rec_view);
         this.recyclerView.setLayoutManager(new LinearLayoutManager(this.getApplicationContext()));
-        for(Group group : Group.GROUPS){
-            Integer key = getIntent().getExtras().getInt("key");
-            if(key != null && group.id == key){
-                recyclerView.setAdapter(new GroupMembersAdapter(group));
-            }
-        }
+//        for(Group group : Group.GROUPS){
+//            Integer key = getIntent().getExtras().getInt("key");
+//            if(key != null && group.id == key){
+//                recyclerView.setAdapter(new GroupMembersAdapter(group));
+//            }
+//        }
     }
 }
