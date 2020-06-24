@@ -6,12 +6,13 @@
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
-    <ImageView
+
+    <ImageButton
+        android:id="@+id/task_finish_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_baseline_done_24"
         android:layout_marginEnd="@dimen/margin_medium"
-        android:contentDescription="@string/task_status_description" />
+        android:src="@drawable/ic_baseline_done_24"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -31,11 +32,5 @@
             android:layout_height="wrap_content" />
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/mark_as_completed"
-        android:layout_width="209dp"
-        android:layout_height="wrap_content"
-        android:text="Mark as completed" />
 
 </LinearLayout>
