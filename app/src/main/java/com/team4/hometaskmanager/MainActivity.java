@@ -1,6 +1,7 @@
 package com.team4.hometaskmanager;
 
 import android.os.Bundle;
+import android.os.PersistableBundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,17 +9,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Context;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.widget.Button;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.team4.hometaskmanager.groups.GroupsListFragment;
 import com.team4.hometaskmanager.tasks.TasksListFragment;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String CURRENT_TAB_KEY = "current_tab";
+
+    private int currentTab = 0;
     private FragmentManager fragmentManager = getSupportFragmentManager();
 
     @Override
@@ -27,24 +26,31 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Register bottom navigation selected event
-        BottomNavigationView bottomNavigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
-        bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.tasks_page_menu_item:
-                        openFragment(new TasksListFragment());
-                        return true;
-                    case R.id.groups_page_menu_item:
-                        openFragment(new GroupsListFragment());
-                        return true;
-                }
-                return false;
+        BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
+        bottomNavigation.setOnNavigationItemSelectedListener(item -> {
+            // Set current tab id
+            currentTab = item.getItemId();
+
+            switch (item.getItemId()) {
+                case R.id.tasks_page_menu_item:
+                    openFragment(new TasksListFragment());
+                    return true;
+                case R.id.groups_page_menu_item:
+                    openFragment(new GroupsListFragment());
+                    return true;
             }
+            return false;
         });
 
         // Set default opened fragment
-        bottomNavigation.setSelectedItemId(R.id.tasks_page_menu_item);
+        currentTab = savedInstanceState != null ? savedInstanceState.getInt(CURRENT_TAB_KEY) : R.id.tasks_page_menu_item;
+        bottomNavigation.setSelectedItemId(currentTab);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        outState.putInt(CURRENT_TAB_KEY, currentTab);
     }
 
     private void openFragment(Fragment fragment) {
