@@ -11,9 +11,6 @@ public class Group {
         this.members = members;
     }
 
-    public Group getInstance(){
-        return this;
-    }
     public static final User DONALD = new User(0, "Donald Duck", "12345");
     public static final User SCROOGE = new User(1, "Scrooge McDuck", "54321");
     public static final User DAISY = new User(2, "Daisy Duck", "abcde");
@@ -24,4 +21,9 @@ public class Group {
             new Group(0, "Groepje 1", new User[]{SCROOGE, DONALD, DAISY}),
             new Group(1, "De neefjes", new User[]{DONALD, HUEY, DEWEY, LOUIE})
     };
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

@@ -1,10 +1,13 @@
 package com.team4.hometaskmanager.tasks;
 
+import java.util.Date;
+
 public class Task {
     public Integer id;
     public Integer groupId;
     public String name;
     public String description;
+    public Date dueDate;
     public String hour;
     public String minute;
     public boolean isDone;

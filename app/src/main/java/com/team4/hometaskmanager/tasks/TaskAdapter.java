@@ -1,6 +1,5 @@
 package com.team4.hometaskmanager.tasks;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,13 +11,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.team4.hometaskmanager.R;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
 
     private ArrayList<Task> tasksDataSet;
     private OnClickedListener taskClickedListener;
     private OnClickedListener finishClickListener;
+
+    private DateFormat dateFormat = new SimpleDateFormat("M/d/yyyy HH:mm", Locale.getDefault());
 
     public TaskAdapter(ArrayList<Task> tasksDataSet, OnClickedListener taskClickedListener, OnClickedListener finishClickListener) {
         this.tasksDataSet = tasksDataSet;
@@ -38,6 +42,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         Task task = tasksDataSet.get(position);
         holder.titleTextView.setText(task.name);
         holder.descriptionTextView.setText(task.description);
+        holder.dueDateTextView.setText(dateFormat.format(task.dueDate));
         holder.setOnTaskClickListener(taskClickedListener);
         holder.setOnTaskFinishClickListener(finishClickListener);
     }
@@ -50,12 +55,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     public static class TaskViewHolder extends RecyclerView.ViewHolder {
         public TextView titleTextView;
         public TextView descriptionTextView;
+        public TextView dueDateTextView;
         public ImageButton finishButton;
 
         public TaskViewHolder(View view) {
             super(view);
             this.titleTextView = view.findViewById(R.id.title_text_view);
             this.descriptionTextView = view.findViewById(R.id.description_text_view);
+            this.dueDateTextView = view.findViewById(R.id.due_date_text_view);
             this.finishButton = view.findViewById(R.id.task_finish_button);
         }
 

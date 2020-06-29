@@ -8,23 +8,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.volley.Request;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.team4.hometaskmanager.R;
-import com.team4.hometaskmanager.common.GsonRequest;
 import com.team4.hometaskmanager.common.RequestQueueSingleton;
-import com.team4.hometaskmanager.groups.GroupFormActivity;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,6 +30,7 @@ public class TasksListFragment extends Fragment {
     public static final String API_URL = "http://tasks.jaep.nl/tasks";
 
     private RecyclerView recyclerView;
+    private SwipeRefreshLayout tasksRefresh;
     private RecyclerView.Adapter taskAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private TasksListViewModel viewModel;
@@ -59,9 +54,15 @@ public class TasksListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tasks_list, container, false);
 
+        // Initialize refresh layout
+        tasksRefresh = view.findViewById(R.id.tasks_refresh);
+        tasksRefresh.setRefreshing(true);
+        tasksRefresh.setOnRefreshListener(this::updateTasks);
+
+        // Initialize view model
         viewModel = new ViewModelProvider(this).get(TasksListViewModel.class);
 
-        if (viewModel.tasks.size() == 0) {
+        if (viewModel.tasks.isEmpty()) {
             updateTasks();
         }
 
@@ -72,6 +73,7 @@ public class TasksListFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
+        // Initialize recycler tasks adapter
         taskAdapter = new TaskAdapter(viewModel.tasks,
                 position -> startActivity(getTaskFormIntent(viewModel.tasks.get(position).id)),
                 position -> Log.d("task", "Finished " + position) // TODO: Finish task
@@ -104,5 +106,6 @@ public class TasksListFragment extends Fragment {
         viewModel.tasks.clear();
         viewModel.tasks.addAll(Arrays.asList(tasks));
         taskAdapter.notifyDataSetChanged();
+        tasksRefresh.setRefreshing(false);
     }
 }
