@@ -5,7 +5,10 @@ import com.team4.hometaskmanager.groups.Group;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class Task {
     public Integer id;
@@ -38,11 +41,18 @@ public class Task {
             taskJson.put("group", group.toJson());
             taskJson.put("name", name);
             taskJson.put("description", description);
-            taskJson.put("dueDate", dueDate);
+            taskJson.put("dueDate", getIsoDate(dueDate));
             taskJson.put("isDone", isDone);
             return taskJson;
         } catch (JSONException e) {
             return null;
         }
+    }
+
+    private String getIsoDate(Date date) {
+        TimeZone timeZone = TimeZone.getDefault();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'"); // Quoted "Z" to indicate UTC, no timezone offset
+        dateFormat.setTimeZone(timeZone);
+        return dateFormat.format(date);
     }
 }

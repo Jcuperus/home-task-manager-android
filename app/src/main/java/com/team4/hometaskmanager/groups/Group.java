@@ -6,6 +6,7 @@ import org.json.JSONObject;
 public class Group {
     public int id;
     public String name;
+    public String color;
     public User[] members;
 
     public Group(int id, String name, User[] members){
@@ -35,6 +36,7 @@ public class Group {
             JSONObject groupJson = new JSONObject();
             groupJson.put("id", id);
             groupJson.put("name", name);
+            groupJson.put("color", color);
             return groupJson;
         } catch (JSONException e) {
             return null;
