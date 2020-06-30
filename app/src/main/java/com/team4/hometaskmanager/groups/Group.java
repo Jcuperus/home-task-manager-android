@@ -1,5 +1,8 @@
 package com.team4.hometaskmanager.groups;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Group {
     public int id;
     public String name;
@@ -25,5 +28,16 @@ public class Group {
     @Override
     public String toString() {
         return name;
+    }
+
+    public JSONObject toJson() {
+        try {
+            JSONObject groupJson = new JSONObject();
+            groupJson.put("id", id);
+            groupJson.put("name", name);
+            return groupJson;
+        } catch (JSONException e) {
+            return null;
+        }
     }
 }

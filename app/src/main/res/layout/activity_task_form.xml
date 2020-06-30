@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable
-            name="taskViewModel"
-            type="com.team4.hometaskmanager.tasks.TaskViewModel" />
+        <variable name="taskViewModel" type="com.team4.hometaskmanager.tasks.TaskViewModel"/>
     </data>
 
     <RelativeLayout
@@ -45,11 +43,22 @@
                 android:text="@={taskViewModel.description}" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Spinner
-            android:id="@+id/group_spinner"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/group_field"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/description_field"/>
+            android:layout_below="@+id/description_field"
+            android:hint="@string/group"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
+
+            <AutoCompleteTextView
+                android:id="@+id/group_dropdown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:editable="false"
+                android:text="@={taskViewModel.group.name}"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
 
 <!--        <com.google.android.material.textfield.TextInputLayout-->

@@ -2,32 +2,32 @@ package com.team4.hometaskmanager.tasks;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Spinner;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.team4.hometaskmanager.groups.Group;
 import com.team4.hometaskmanager.R;
 import com.team4.hometaskmanager.common.RequestQueueSingleton;
 import com.team4.hometaskmanager.databinding.ActivityTaskFormBinding;
+import com.team4.hometaskmanager.groups.Group;
 import com.team4.hometaskmanager.groups.GroupsListViewModel;
 import com.team4.hometaskmanager.groups.GroupsRepository;
 
-import java.util.Arrays;
+import org.json.JSONException;
 
 public class TaskFormActivity extends AppCompatActivity {
 
     TaskViewModel taskViewModel;
     ActivityTaskFormBinding binding;
     GroupsListViewModel groupsViewModel;
-    ArrayAdapter<Group> groupsAdapter;
-    Spinner groupDropdown;
 
     private GroupsRepository groupsRepository = new GroupsRepository();
     private TasksRepository tasksRepository = new TasksRepository();
@@ -38,50 +38,48 @@ public class TaskFormActivity extends AppCompatActivity {
         setContentView(R.layout.activity_task_form);
 
         groupsViewModel = new ViewModelProvider(this).get(GroupsListViewModel.class);
-
-//        if (groupsViewModel.groups.isEmpty()) {
-//            loadGroups();
-//        }
-
-        int taskId = getIntent().getIntExtra("id", 0);
-
-        if (taskId > 0) {
-            loadTask(taskId);
-        }
-
-        groupDropdown = findViewById(R.id.group_spinner);
-        groupsAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, groupsViewModel.groups);  //new ArrayAdapter<>(getApplicationContext(), R.layout.dropdown_menu_popup_item, groupsViewModel.groups);
-        groupsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        groupDropdown.setAdapter(groupsAdapter);
-        groupDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                taskViewModel.setGroupId(groupsViewModel.groups.get(position).id);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-//        AutoCompleteTextView hourDropDown = findViewById(R.id.hour_drop_down);
-//        hourDropDown.setAdapter(new ArrayAdapter<Integer>(getApplicationContext(), R.layout.dropdown_menu_popup_item, filledArray(24)));
-//        AutoCompleteTextView minuteDropDown = findViewById(R.id.minute_drop_down);
-//        minuteDropDown.setAdapter(new ArrayAdapter<Integer>(getApplicationContext(), R.layout.dropdown_menu_popup_item, filledArray(60)));
-
-        Task task = new Task();
         binding = DataBindingUtil.setContentView(this, R.layout.activity_task_form);
-        taskViewModel = new TaskViewModel(task);
+        taskViewModel = new TaskViewModel(new Task());
         binding.setTaskViewModel(taskViewModel);
+
+        if (groupsViewModel.getGroups() == null || groupsViewModel.getGroups().length == 0) {
+            loadGroups();
+        } else {
+            buildView();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.form_save_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_save_button:
+                RequestQueueSingleton.getInstance(getApplicationContext()).addToRequestQueue(tasksRepository.saveTask(taskViewModel.getTask(),
+                        response -> {
+                            try {
+                                Toast.makeText(getApplicationContext(), response.getString("message"), Toast.LENGTH_SHORT).show();
+                            } catch (JSONException ignored) {}
+                            finish();
+                        },
+                        error -> Log.d("error", error.toString())
+                ));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void loadGroups() {
         RequestQueueSingleton.getInstance(getApplicationContext()).addToRequestQueue(groupsRepository.getGroups(
                 groups -> {
-                    groupsViewModel.groups.clear();
-                    groupsViewModel.groups.addAll(Arrays.asList(groups));
-                    groupsAdapter.notifyDataSetChanged();
+                    groupsViewModel.setGroups(groups);
+                    buildView();
                 },
                 error -> Log.e("Groups", error.toString())
         ));
@@ -89,9 +87,33 @@ public class TaskFormActivity extends AppCompatActivity {
 
     private void loadTask(int taskId) {
         RequestQueueSingleton.getInstance(getApplicationContext()).addToRequestQueue(tasksRepository.getTask(taskId,
-            task -> binding.setTaskViewModel(new TaskViewModel(task)),
+            task -> {
+                taskViewModel.setTask(task);
+                binding.invalidateAll();
+            },
             error -> Log.e("Task form", error.toString())
         ));
+    }
+
+    private void buildView() {
+        AutoCompleteTextView groupDropdown = findViewById(R.id.group_dropdown);
+        ArrayAdapter<Group> groupArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, groupsViewModel.getGroups());  //new ArrayAdapter<>(getApplicationContext(), R.layout.dropdown_menu_popup_item, groupsViewModel.groups);
+        groupDropdown.setAdapter(groupArrayAdapter);
+        groupDropdown.setOnItemClickListener((parent, view, position, id) -> {
+            taskViewModel.setGroup(groupsViewModel.getGroups()[position]);
+        });
+
+        //TODO: Re add reminders
+//        AutoCompleteTextView hourDropDown = findViewById(R.id.hour_drop_down);
+//        hourDropDown.setAdapter(new ArrayAdapter<Integer>(getApplicationContext(), R.layout.dropdown_menu_popup_item, filledArray(24)));
+//        AutoCompleteTextView minuteDropDown = findViewById(R.id.minute_drop_down);
+//        minuteDropDown.setAdapter(new ArrayAdapter<Integer>(getApplicationContext(), R.layout.dropdown_menu_popup_item, filledArray(60)));
+
+        int taskId = getIntent().getIntExtra("id", 0);
+
+        if (taskId > 0) {
+            loadTask(taskId);
+        }
     }
 
     private Integer[] filledArray(int amount){

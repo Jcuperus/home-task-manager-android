@@ -10,4 +10,5 @@
     <string name="task_status_description">Task status symbol</string>
     <string name="hour">Hour</string>
     <string name="minute">Minute</string>
+    <string name="save">Save</string>
 </resources>
