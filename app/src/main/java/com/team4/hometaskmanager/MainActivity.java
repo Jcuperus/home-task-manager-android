@@ -1,5 +1,6 @@
 package com.team4.hometaskmanager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 
@@ -12,6 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.team4.hometaskmanager.groups.GroupsListFragment;
 import com.team4.hometaskmanager.tasks.TasksListFragment;
+import com.team4.hometaskmanager.users.LoginActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +26,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Show login component on first boot
+        if (true) {
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        }
 
         // Register bottom navigation selected event
         BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);

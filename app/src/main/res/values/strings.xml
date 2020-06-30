@@ -11,4 +11,7 @@
     <string name="hour">Hour</string>
     <string name="minute">Minute</string>
     <string name="save">Save</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="login">Login</string>
 </resources>

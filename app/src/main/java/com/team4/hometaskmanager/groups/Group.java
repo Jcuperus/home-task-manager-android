@@ -1,9 +1,11 @@
 package com.team4.hometaskmanager.groups;
 
+import com.team4.hometaskmanager.common.Serializable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Group {
+public class Group implements Serializable {
     public int id;
     public String name;
     public String color;

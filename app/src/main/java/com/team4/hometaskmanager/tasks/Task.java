@@ -1,5 +1,6 @@
 package com.team4.hometaskmanager.tasks;
 
+import com.team4.hometaskmanager.common.Serializable;
 import com.team4.hometaskmanager.groups.Group;
 
 import org.json.JSONException;
@@ -10,7 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
-public class Task {
+public class Task implements Serializable {
     public Integer id;
     public Group group;
     public String name;

@@ -27,8 +27,6 @@ import java.util.Arrays;
  */
 public class TasksListFragment extends Fragment {
 
-    public static final String API_URL = "http://tasks.jaep.nl/tasks";
-
     private RecyclerView recyclerView;
     private SwipeRefreshLayout tasksRefresh;
     private RecyclerView.Adapter taskAdapter;
