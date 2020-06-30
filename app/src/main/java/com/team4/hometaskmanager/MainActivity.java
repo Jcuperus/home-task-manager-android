@@ -1,5 +1,7 @@
 package com.team4.hometaskmanager;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -27,8 +29,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        AccountManager accountManager = AccountManager.get(this);
+        Account[] accounts = accountManager.getAccountsByType(LoginActivity.ACCOUNT_TYPE_KEY);
+
         // Show login component on first boot
-        if (true) {
+        if (accounts.length == 0) {
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         }
 
