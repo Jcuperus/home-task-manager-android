@@ -5,6 +5,7 @@ import android.accounts.AccountManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -43,6 +44,8 @@ public class LoginActivity extends AppCompatActivity {
                     accountManager.addAccountExplicitly(account, loginViewModel.getPassword(), null);
                     accountManager.setAuthToken(account, UserAuthenticator.AUTHENTICATION_TYPE_KEY, response);
                     finish();
+
+                    Toast.makeText(getApplicationContext(), "User logged in", Toast.LENGTH_LONG).show();
                 },
                 error -> { Log.e("login", error.toString()); }
         ));
