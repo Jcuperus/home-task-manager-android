@@ -1,25 +1,19 @@
 package com.team4.hometaskmanager.users;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import com.team4.hometaskmanager.R;
 import com.team4.hometaskmanager.common.RequestQueueSingleton;
 import com.team4.hometaskmanager.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
-
-    public static final String ACCOUNT_TYPE_KEY = "account_type_tasks";
-    public static final String AUTHENTICATION_TYPE_KEY = "auth_type";
-    public static final String IS_NEW_KEY = "is_new";
 
     public LoginViewModel loginViewModel;
     public ActivityLoginBinding loginBinding;
@@ -42,14 +36,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onLogin(View view) {
-        Log.d("login", loginViewModel.getUser().toJson().toString());
         RequestQueueSingleton.getInstance(getApplicationContext()).addToRequestQueue(loginRepository.loginUser(loginViewModel.getUser(),
                 response -> {
-                    Log.d("login", response);
                     AccountManager accountManager = AccountManager.get(this);
-                    Account account = new Account(loginViewModel.getUsername(), ACCOUNT_TYPE_KEY);
+                    Account account = new Account(loginViewModel.getUsername(), UserAuthenticator.ACCOUNT_TYPE_KEY);
                     accountManager.addAccountExplicitly(account, loginViewModel.getPassword(), null);
-                    accountManager.setAuthToken(account, AUTHENTICATION_TYPE_KEY, "token");
+                    accountManager.setAuthToken(account, UserAuthenticator.AUTHENTICATION_TYPE_KEY, response);
                     finish();
                 },
                 error -> { Log.e("login", error.toString()); }

@@ -51,6 +51,7 @@ public class TasksListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tasks_list, container, false);
+        tasksRepository.setContext(getContext());
 
         // Initialize refresh layout
         tasksRefresh = view.findViewById(R.id.tasks_refresh);

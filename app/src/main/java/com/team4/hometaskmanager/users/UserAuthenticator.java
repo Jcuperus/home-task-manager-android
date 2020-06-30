@@ -10,6 +10,11 @@ import android.content.Intent;
 import android.os.Bundle;
 
 public class UserAuthenticator extends AbstractAccountAuthenticator {
+
+    public static final String ACCOUNT_TYPE_KEY = "account_type_tasks";
+    public static final String AUTHENTICATION_TYPE_KEY = "jwt_token";
+    public static final String IS_NEW_KEY = "is_new";
+
     private final Context context;
 
     public UserAuthenticator(Context context) {
@@ -25,9 +30,9 @@ public class UserAuthenticator extends AbstractAccountAuthenticator {
     @Override
     public Bundle addAccount(AccountAuthenticatorResponse response, String accountType, String authTokenType, String[] requiredFeatures, Bundle options) throws NetworkErrorException {
         Intent intent = new Intent();
-        intent.putExtra(LoginActivity.ACCOUNT_TYPE_KEY, accountType);
-        intent.putExtra(LoginActivity.AUTHENTICATION_TYPE_KEY, authTokenType);
-        intent.putExtra(LoginActivity.IS_NEW_KEY, true);
+        intent.putExtra(ACCOUNT_TYPE_KEY, accountType);
+        intent.putExtra(AUTHENTICATION_TYPE_KEY, authTokenType);
+        intent.putExtra(IS_NEW_KEY, true);
         intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response);
 
         Bundle result = new Bundle();

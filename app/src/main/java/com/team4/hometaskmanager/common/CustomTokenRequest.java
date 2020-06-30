@@ -1,7 +1,5 @@
 package com.team4.hometaskmanager.common;
 
-import android.util.Log;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
@@ -12,7 +10,6 @@ import com.android.volley.toolbox.StringRequest;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Map;
 
 public class CustomTokenRequest extends StringRequest {
 
@@ -24,11 +21,6 @@ public class CustomTokenRequest extends StringRequest {
     public CustomTokenRequest(int method, String url, JSONObject requestBody, Response.Listener<String> listener, Response.ErrorListener errorListener) {
         super(method, BackendVars.BASE_URL + url, listener, errorListener);
         this.requestBody = requestBody.toString();
-    }
-
-    @Override
-    public Map<String, String> getHeaders() throws AuthFailureError {
-        return TokenRepository.getHeaders();
     }
 
     @Override

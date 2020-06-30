@@ -1,7 +1,5 @@
 package com.team4.hometaskmanager;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -16,6 +14,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.team4.hometaskmanager.groups.GroupsListFragment;
 import com.team4.hometaskmanager.tasks.TasksListFragment;
 import com.team4.hometaskmanager.users.LoginActivity;
+import com.team4.hometaskmanager.users.LoginRepository;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,21 +23,23 @@ public class MainActivity extends AppCompatActivity {
     private int currentTab = 0;
     private FragmentManager fragmentManager = getSupportFragmentManager();
 
+    BottomNavigationView bottomNavigation;
+    private LoginRepository loginRepository = new LoginRepository();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        AccountManager accountManager = AccountManager.get(this);
-        Account[] accounts = accountManager.getAccountsByType(LoginActivity.ACCOUNT_TYPE_KEY);
+        String token = loginRepository.getAuthToken(getApplicationContext());
 
         // Show login component on first boot
-        if (accounts.length == 0) {
+        if (token == null || token.isEmpty()) {
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         }
 
         // Register bottom navigation selected event
-        BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
+        bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(item -> {
             // Set current tab id
             currentTab = item.getItemId();
@@ -63,6 +64,12 @@ public class MainActivity extends AppCompatActivity {
     public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState, outPersistentState);
         outState.putInt(CURRENT_TAB_KEY, currentTab);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        bottomNavigation.setSelectedItemId(currentTab);
     }
 
     private void openFragment(Fragment fragment) {

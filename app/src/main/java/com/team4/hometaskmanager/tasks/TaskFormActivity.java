@@ -37,6 +37,9 @@ public class TaskFormActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_form);
 
+        tasksRepository.setContext(getApplicationContext());
+        groupsRepository.setContext(getApplicationContext());
+
         groupsViewModel = new ViewModelProvider(this).get(GroupsListViewModel.class);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_task_form);
         taskViewModel = new TaskViewModel(new Task());
